@@ -5,6 +5,9 @@ import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import utils.DriverFactory;
 
 import static org.junit.Assert.assertTrue;
@@ -15,7 +18,17 @@ public class GoogleSteps {
 
     @Given("User opens Google homepage")
     public void openGoogle() {
-        driver.get("https://www.google.com");
+      //  driver.get("https://www.google.com");
+    	
+    	String browser = System.getProperty("browser", "chrome");
+
+    	if(browser.equalsIgnoreCase("headless")){
+    	    ChromeOptions options = new ChromeOptions();
+    	    options.addArguments("--headless=new");
+    	    driver = new ChromeDriver(options);
+    	}else{
+    	    driver = new ChromeDriver();
+    	}
     }
 
     @When("User searches for {string}")
