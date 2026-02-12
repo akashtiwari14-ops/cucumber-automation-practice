@@ -33,21 +33,24 @@ public class GoogleSteps {
     	    options.addArguments("--headless=new");
     	    options.addArguments("--no-sandbox");
     	    options.addArguments("--disable-dev-shm-usage");
+    	    options.addArguments("--remote-allow-origins=*");
     	}
 
     	driver = new ChromeDriver(options);
     	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     	driver.manage().window().maximize();
+    	driver.get("https://www.google.com/ncr");
+    	driver.manage().deleteAllCookies();
     }
 
     @When("User searches for {string}")
     public void searchFor(String searchText) {
 //        driver.findElement(By.name("q"))
 //                .sendKeys(searchText + Keys.ENTER);
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
     	WebElement searchBox = wait.until(
-    	        ExpectedConditions.visibilityOfElementLocated(By.name("q"))
+    	        ExpectedConditions.presenceOfElementLocated(By.name("q"))
     	);
 
     	searchBox.sendKeys(searchText + Keys.ENTER);
